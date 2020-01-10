@@ -1,0 +1,43 @@
+# linux
+
+> open terminal here
+
+>> interactive
+> type
+
+python
+
+> type
+
+import envelope_rafa_pkg
+
+> exit
+
+exit()
+
+>> script
+> type 
+
+python test.py
+
+# windows
+
+>> interactive
+> open terminal here
+
+> type
+
+winpty python
+
+> type
+
+import envelope_rafa_pkg
+
+> exit
+
+exit()
+
+>> script
+> type 
+
+python test.py
