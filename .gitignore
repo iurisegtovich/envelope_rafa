@@ -1,0 +1,8 @@
+**/*.o
+**/*.so
+**/*.pyd
+**/*.mod
+**/*.pyf
+**/*.pyc
+build/*
+envelope_rafa_pkg.egg-info
