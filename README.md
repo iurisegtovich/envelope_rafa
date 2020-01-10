@@ -20,4 +20,11 @@ python setup.py install
 ? python setup.py sdist bdist_wheel
 
 
+#--------------------------------------------------------
+
+pip install . --install-option
+pip install . --global-option
+>--platform Defaults to the platform of the running system. #no mess here
+>https://stackoverflow.com/questions/47210058/passing-command-line-arguments-to-pip-install
+
 

@@ -14,7 +14,9 @@ from setuptools import setup
 
 from setuptools.command.build_py import build_py
 from setuptools.command.build_ext import build_ext
-subprocess.run(r"make -C library && make -C interface", shell=True, check=True)
+from setuptools.command.install import install
+
+
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
@@ -32,7 +34,14 @@ def build_extensions():
     conda install -c conda-forge  m2w64-toolchain_win-64
     conda install -c conda-forge  make
     """
-    subprocess.run(r"make -C library && make -C interface", shell=True, check=True)
+    global someopt
+    if someopt == 'windows':
+        subprocess.run(r"make -C library -f Makefile_win.mak && make -C interface -f Makefile_win.mak", shell=True, check=True)
+    elif someopt == 'linux':
+        subprocess.run(r"make -C library && make -C interface", shell=True, check=True)
+    else:
+        print("TRY WITH <pip install -vvv . --install-option='--someopt=windows'>")
+        print("TRY WITH <pip install -vvv . --install-option='--someopt=linux'>")
 
 def make_cmd_class(base):
     """
@@ -55,6 +64,31 @@ def make_cmd_class(base):
 
     return CmdClass
 
+class InstallCommand(install):
+    user_options = install.user_options + [
+        ('someopt=', None, None), # a 'flag' option
+        ('someval=', None, None) # an option that takes a value
+    ]
+
+    def initialize_options(self):
+        install.initialize_options(self)
+        self.someopt = None
+        self.someval = None
+
+    def finalize_options(self):
+        print("value of someopt is", self.someopt)
+        print("value of someval is", self.someval)
+        install.finalize_options(self)
+    def run(self):
+        global someopt
+        global someval
+        someopt = self.someopt # will be 1 or None
+        someval = self.someval # will be 1 or None
+        install.run(self)
+    
+
+
+
 
 setup(
     name='envelope_rafa_pkg',
@@ -70,10 +104,11 @@ setup(
     install_requires=open('requirements.txt').read().splitlines(),
     setup_requires=['numpy'], #also requires conda' mingw and make
     python_requires='>=3',
-    package_data={'envelope_rafa_pkg': ['envelope_rafa*.so']}, #ship libraries!
+    package_data={'envelope_rafa_pkg': ['envelope_rafa*.so','python_solution*.pyd']}, #ship libraries, whatever made!
     include_package_data=True,
     cmdclass={
         'build_py': make_cmd_class(build_py),
+        'install': InstallCommand,
         },
 )
 

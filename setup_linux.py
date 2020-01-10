@@ -14,7 +14,8 @@ from setuptools import setup
 
 from setuptools.command.build_py import build_py
 from setuptools.command.build_ext import build_ext
-subprocess.run(r"make -C library && make -C interface", shell=True, check=True)
+
+
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
