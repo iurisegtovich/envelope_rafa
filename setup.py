@@ -104,7 +104,7 @@ setup(
     install_requires=open('requirements.txt').read().splitlines(),
     setup_requires=['numpy'], #also requires conda' mingw and make
     python_requires='>=3',
-    package_data={'envelope_rafa_pkg': ['envelope_rafa*.so','python_solution*.pyd']}, #ship libraries, whatever made!
+    package_data={'envelope_rafa_pkg': ['envelope_rafa*.so','envelope_rafa*.pyd']}, #ship libraries, whatever made!
     include_package_data=True,
     cmdclass={
         'build_py': make_cmd_class(build_py),
